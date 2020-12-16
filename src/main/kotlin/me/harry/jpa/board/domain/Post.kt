@@ -1,4 +1,4 @@
-package me.harry.jpa.domain
+package me.harry.jpa.board.domain
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -7,10 +7,10 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
-class Member(
+class Post(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
         @Column
-        var name: String = "",
+        val title: String,
 )
