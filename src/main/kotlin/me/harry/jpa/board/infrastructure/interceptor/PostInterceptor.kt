@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse
 class PostInterceptor : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        println("preHandle is coming~!")
+        println("=====Interceptor preHandle=====")
         return true
     }
 
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
-        println("postHandle is coming~!")
+        println("=====Interceptor postHandle=====")
     }
 }

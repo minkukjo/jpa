@@ -24,11 +24,11 @@ class LoggingFilter : OncePerRequestFilter() {
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val wrappingRequest = ContentCachingRequestWrapper(request)
         val wrappingResponse = ContentCachingResponseWrapper(response)
-        println("Filter Request : $wrappingRequest")
+        println("=====Filter Request : $wrappingRequest=====")
         filterChain.doFilter(wrappingRequest, wrappingResponse)
-        // 무언가의 로깅 처리
+        // ES로 로깅 발싸
         val readValue = String(wrappingResponse.contentAsByteArray)
-        println("Filter Response : $readValue")
+        println("=====Filter Response : $readValue=====")
 
         wrappingResponse.copyBodyToResponse()
     }

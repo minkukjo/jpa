@@ -1,6 +1,7 @@
 package me.harry.jpa.board.presentation
 
 import me.harry.jpa.board.application.PostService
+import me.harry.jpa.board.infrastructure.aop.log.LogExecutionTime
 import me.harry.jpa.board.presentation.dto.PostDTO
 import me.harry.jpa.board.presentation.response.PostResponse
 import org.springframework.http.MediaType
@@ -24,6 +25,7 @@ class PostController(
         postService.create(postDTO.toPost())
     }
 
+    @LogExecutionTime
     @GetMapping("/{id}")
     fun readPost(@PathVariable("id") id: Long): PostResponse {
         val post = postService.read(id)
