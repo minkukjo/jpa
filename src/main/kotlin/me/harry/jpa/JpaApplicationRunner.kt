@@ -1,10 +1,5 @@
 package me.harry.jpa
 
-import me.harry.jpa.board.domain.Post
-import org.springframework.boot.ApplicationArguments
-import org.springframework.boot.ApplicationRunner
-import javax.persistence.EntityManagerFactory
-
 //class JpaApplicationRunner(val emf: EntityManagerFactory) : ApplicationRunner {
 //    // EntityManagerFactory는 DB당 하나!
 //
