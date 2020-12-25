@@ -68,6 +68,6 @@ tasks.withType<Test> {
 }
 
 tasks.bootJar {
-    mainClassName = "me.harry.example.ExampleApplicationKt"
+    mainClassName = "me.harry.jpa.JpaApplicationKt"
     archiveFileName.set("harry.jar")
 }

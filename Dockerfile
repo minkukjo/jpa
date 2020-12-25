@@ -14,4 +14,4 @@ WORKDIR $APP_HOME
 COPY --from=TEMP_BUILD_IMAGE $APP_HOME/build/libs/$ARTIFACT_NAME .
 
 EXPOSE 8080
-ENTRYPOINT java -jar $ARTIFACT_NAME -Dspring.profiles.active=prod
+ENTRYPOINT java -jar -Dspring.profiles.active=prod $ARTIFACT_NAME
