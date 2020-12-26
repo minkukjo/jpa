@@ -5,6 +5,8 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 @Entity
 class OrderItem(
@@ -13,11 +15,13 @@ class OrderItem(
         @Column(name = "order_item_id")
         val id: Long? = null,
 
-        @Column(name = "order_id")
-        val orderId: Long,
+        @ManyToOne
+        @JoinColumn(name = "order_id")
+        var order: Order,
 
-        @Column(name = "item_id")
-        val itemId: Long,
+        @ManyToOne
+        @JoinColumn(name = "item_id")
+        val item: Item,
 
         @Column
         val orderPrice: Int,

@@ -7,6 +7,9 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
@@ -17,13 +20,22 @@ class Order(
         @Column(name = "order_id")
         val id: Long? = null,
 
-        @Column(name = "member_id")
-        val memberId: Long,
+        @ManyToOne
+        @JoinColumn(name = "member_id")
+        val member: Member,
+
+        @OneToMany(mappedBy = "order")
+        val orderItems: MutableList<OrderItem> = mutableListOf(),
 
         @Column
-        val orderDate: LocalDateTime,
+        val orderDate: LocalDateTime = LocalDateTime.now(),
 
         @Column
         @Convert(converter = OrderStatusConverter::class)
         val orderStatus: OrderStatus,
-)
+) {
+    fun addOrderItem(orderItem: OrderItem) {
+        this.orderItems.add(orderItem)
+        orderItem.order = this
+    }
+}

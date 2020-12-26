@@ -5,6 +5,7 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.OneToMany
 
 @Entity
 class Member(
@@ -21,7 +22,10 @@ class Member(
 
         @Column
         val street: String,
-        
+
         @Column
         val zipcode: String,
+
+        @OneToMany(mappedBy = "member")
+        val orders: MutableList<Order> = mutableListOf()
 )
