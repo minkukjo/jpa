@@ -23,9 +23,7 @@ class OrderItem(
         @JoinColumn(name = "item_id")
         val item: Item,
 
-        @Column
         val orderPrice: Int,
-
-        @Column
+        
         val count: Int,
 )

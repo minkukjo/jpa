@@ -10,6 +10,7 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
+import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
@@ -22,15 +23,17 @@ class Order(
 
         @ManyToOne
         @JoinColumn(name = "member_id")
-        val member: Member,
+        val member: Member? = null,
 
         @OneToMany(mappedBy = "order")
         val orderItems: MutableList<OrderItem> = mutableListOf(),
 
-        @Column
+        @OneToOne
+        @JoinColumn(name = "delivery_id")
+        val delivery: Delivery? = null,
+
         val orderDate: LocalDateTime = LocalDateTime.now(),
 
-        @Column
         @Convert(converter = OrderStatusConverter::class)
         val orderStatus: OrderStatus,
 ) {
