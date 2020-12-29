@@ -4,6 +4,7 @@ import me.harry.jpa.shop.domain.enums.DeliveryStatus
 import me.harry.jpa.shop.domain.enums.DeliveryStatusConverter
 import javax.persistence.Column
 import javax.persistence.Convert
+import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
@@ -22,11 +23,8 @@ class Delivery(
         @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
         val order: Order,
 
-        val city: String,
-
-        val street: String,
-
-        val zipcode: String,
+        @Embedded
+        val address: Address?,
 
         @Convert(converter = DeliveryStatusConverter::class)
         val status: DeliveryStatus

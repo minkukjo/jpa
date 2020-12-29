@@ -22,8 +22,21 @@ class JpaApplicationRunner(val emf: EntityManagerFactory) : ApplicationRunner {
         tx.begin()
 
         val item = Book(name = "JPA", price = 30000, stockQuantity = 1000, author = "김영한", isbn = "1234")
-
         em.persist(item)
+        println(item.createdDate)
+        println(item.lastModifiedDate)
+        println("==========================")
+
+        Thread.sleep(1000L)
+
+        val item2 = em.find(Book::class.java, item.id)
+        item2.author = "해리"
+
+        em.flush()
+        em.clear()
+
+        println(item2.createdDate)
+        println(item2.lastModifiedDate)
 
         try {
             tx.commit()

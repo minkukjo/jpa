@@ -1,6 +1,7 @@
 package me.harry.jpa.shop.domain
 
 import javax.persistence.Column
+import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -16,11 +17,8 @@ class Member(
 
         val name: String,
 
-        val city: String,
-
-        val street: String,
-        
-        val zipcode: String,
+        @Embedded
+        val address: Address?,
 
         @OneToMany(mappedBy = "member")
         val orders: MutableList<Order> = mutableListOf()

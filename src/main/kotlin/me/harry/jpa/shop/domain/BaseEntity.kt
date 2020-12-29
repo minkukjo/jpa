@@ -9,9 +9,10 @@ import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-open class BaseEntity(
-        @CreatedDate
-        val createdDate: LocalDateTime = LocalDateTime.now(),
-        @LastModifiedDate
-        val lastModifiedDate: LocalDateTime = LocalDateTime.now(),
-)
+open class BaseEntity {
+    @CreatedDate
+    lateinit var createdDate: LocalDateTime
+
+    @LastModifiedDate
+    lateinit var lastModifiedDate: LocalDateTime
+}
