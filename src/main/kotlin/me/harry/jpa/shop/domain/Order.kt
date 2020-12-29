@@ -1,9 +1,11 @@
 package me.harry.jpa.shop.domain
 
 import java.time.LocalDateTime
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Convert
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -21,14 +23,14 @@ class Order(
         @Column(name = "order_id")
         val id: Long? = null,
 
-        @ManyToOne
+        @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "member_id")
         val member: Member? = null,
 
-        @OneToMany(mappedBy = "order")
+        @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
         val orderItems: MutableList<OrderItem> = mutableListOf(),
 
-        @OneToOne
+        @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
         @JoinColumn(name = "delivery_id")
         val delivery: Delivery? = null,
 
