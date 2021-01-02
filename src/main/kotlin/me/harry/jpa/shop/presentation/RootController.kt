@@ -9,6 +9,6 @@ class RootController {
 
     @GetMapping("/")
     fun welcome(): String {
-        return "Welcome To My Springboot Project!"
+        return "2021년 Happy NewYear"
     }
 }
