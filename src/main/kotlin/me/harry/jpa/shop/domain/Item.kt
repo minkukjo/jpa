@@ -11,13 +11,13 @@ import javax.persistence.InheritanceType
 import javax.persistence.ManyToMany
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
 abstract class Item(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "item_id")
-        val id: Long? = null,
+        open val id: Long? = null,
 
         open val name: String,
 
@@ -26,5 +26,5 @@ abstract class Item(
         open val stockQuantity: Int,
 
         @ManyToMany(mappedBy = "items")
-        val item: MutableList<Category> = mutableListOf()
+        open val item: MutableList<Category> = mutableListOf()
 ) : BaseEntity()

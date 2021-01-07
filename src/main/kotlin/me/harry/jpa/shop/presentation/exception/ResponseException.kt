@@ -27,9 +27,4 @@ class ResponseException : Exception {
         this._code = httpStatus.value()
         this._message = message
     }
-
-
-    fun clone(): ResponseException {
-        return ResponseException(this)
-    }
 }

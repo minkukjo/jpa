@@ -15,15 +15,15 @@ class OrderService(
 ) {
 
     @Transactional
-    fun create(order: Order) {
-        orderRepository.save(order)
+    fun create(order: Order): Order {
+        return orderRepository.save(order)
     }
 
     @Transactional(readOnly = true)
-    // Throws를 붙이고 떼고 차이를 직접 보여드릴 것
     @Throws(ResponseException::class)
     fun read(id: Long): Order {
-        return orderRepository.findByIdOrNull(id) ?: throw NotFoundException.ORDER.get()
+        return orderRepository.findByIdOrNull(id)
+                ?: throw NotFoundException.ORDER.get()
     }
 
     fun update() {

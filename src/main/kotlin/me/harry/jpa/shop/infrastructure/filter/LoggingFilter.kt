@@ -17,7 +17,7 @@ class LoggingFilter : OncePerRequestFilter() {
 //        println("=====Filter Request : $wrappingRequest=====")
         filterChain.doFilter(wrappingRequest, wrappingResponse)
         // ES로 로깅 발싸
-        val readValue = String(wrappingResponse.contentAsByteArray)
+//        val readValue = String(wrappingResponse.contentAsByteArray)
 //        println("=====Filter Response : $readValue=====")
 
         wrappingResponse.copyBodyToResponse()

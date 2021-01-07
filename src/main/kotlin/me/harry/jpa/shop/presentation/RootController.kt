@@ -9,6 +9,6 @@ class RootController {
 
     @GetMapping("/")
     fun welcome(): String {
-        return "2021년 Happy NewYear"
+        return "2021 Happy NewYear"
     }
 }
