@@ -44,18 +44,36 @@ repositories {
 }
 
 val elasticsearchVersion = "7.10.0"
+val commonsPool2Version = "2.9.0"
 
 dependencies {
+    // MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // AOP
     implementation("org.springframework.boot:spring-boot-starter-aop")
+
+    // DB
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("mysql:mysql-connector-java")
+    implementation("com.h2database:h2")
+
+    // REDIS
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    // Kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.elasticsearch.client:elasticsearch-rest-high-level-client:$elasticsearchVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-    implementation("mysql:mysql-connector-java")
-    implementation("com.h2database:h2")
+
+    // POOL
+    implementation("org.apache.commons:commons-pool2:$commonsPool2Version")
+
+    // ES
+    implementation("org.elasticsearch.client:elasticsearch-rest-high-level-client:$elasticsearchVersion")
+
+    // TEST
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
