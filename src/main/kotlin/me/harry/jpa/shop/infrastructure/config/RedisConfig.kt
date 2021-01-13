@@ -1,16 +1,25 @@
 package me.harry.jpa.shop.infrastructure.config
 
+import me.harry.jpa.shop.infrastructure.cache.Caches
+import me.harry.jpa.shop.infrastructure.cache.SimpleRedisCacheWriter
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.CacheManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
+import org.springframework.data.redis.cache.CacheKeyPrefix
+import org.springframework.data.redis.cache.RedisCacheConfiguration
 import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.cache.RedisCacheWriter
 import org.springframework.data.redis.connection.RedisPassword
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.RedisSerializationContext
+import org.springframework.data.redis.serializer.StringRedisSerializer
+import org.springframework.http.codec.json.KotlinSerializationJsonDecoder
 import java.time.Duration
 
 @Configuration
@@ -52,7 +61,7 @@ class RedisConfig(
     }
 
     @Bean
-    fun redisTemplate(connectionFactory: LettuceConnectionFactory): LettuceConnectionFactory {
+    fun lettuceConnectionFactory(): LettuceConnectionFactory {
         val redisConfig = RedisStandaloneConfiguration()
         redisConfig.database = 0
         redisConfig.hostName = host
@@ -69,11 +78,26 @@ class RedisConfig(
         return LettuceConnectionFactory(redisConfig, clientConfig)
     }
 
-    // TODO Redis Cache Writer 작성 해야함
-//    @Bean(name = [REDIS_MANAGER])
-//    fun redisCacheManager(): CacheManager {
-//        // val redisCacheWriter =
-//        return RedisCacheManager.builder()
-//    }
+    @Primary
+    @Bean(name = [REDIS_MANAGER])
+    fun redisCacheManager(): CacheManager {
+
+        val redisCacheWriter = SimpleRedisCacheWriter(lettuceConnectionFactory())
+
+        val defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofSeconds(Caches.DEFAULT_EXPIRE_TIME))
+                .disableCachingNullValues()
+                // CacheKeyPrefix는 재정의가 가능하다
+                .computePrefixWith(CacheKeyPrefix.simple())
+
+        val cacheConfigMap = mutableMapOf<String, RedisCacheConfiguration>()
+        cacheConfigMap[Caches.ALL.Order.NAME] = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(Caches.ALL.Order.TTL))
+        return RedisCacheManager.builder(redisCacheWriter)
+                .cacheDefaults(defaultCacheConfig)
+                .withInitialCacheConfigurations(cacheConfigMap)
+                .disableCreateOnMissingCache()
+                .build()
+
+    }
 
 }

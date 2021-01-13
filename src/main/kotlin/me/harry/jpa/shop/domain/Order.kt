@@ -1,5 +1,6 @@
 package me.harry.jpa.shop.domain
 
+import java.io.Serializable
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.Column
@@ -38,7 +39,7 @@ class Order(
 
         @Convert(converter = OrderStatusConverter::class)
         val orderStatus: OrderStatus,
-) {
+) : Serializable {
     fun addOrderItem(orderItem: OrderItem) {
         this.orderItems.add(orderItem)
         orderItem.order = this

@@ -28,12 +28,12 @@ class OrderController(
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun create(@RequestBody orderDTO: OrderDTO) {
         val order = orderService.create(orderDTO.toOrder())
-        val map = hashMapOf<String, Any>()
-        map["orderStatus"] = order.orderStatus
-        map["orderDate"] = order.orderDate
-        val indexRequest = IndexRequest("orders").id("2").source(map)
-        val indexResponse: IndexResponse = esClient.index(indexRequest, RequestOptions.DEFAULT)
-        println(indexResponse)
+//        val map = hashMapOf<String, Any>()
+//        map["orderStatus"] = order.orderStatus
+//        map["orderDate"] = order.orderDate
+//        val indexRequest = IndexRequest("orders").id("2").source(map)
+//        val indexResponse: IndexResponse = esClient.index(indexRequest, RequestOptions.DEFAULT)
+//        println(indexResponse)
     }
 
     @GetMapping("/{id}")
