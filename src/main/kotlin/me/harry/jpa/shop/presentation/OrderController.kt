@@ -26,6 +26,7 @@ class OrderController(
 ) {
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @Throws(Throwable::class)
     fun create(@RequestBody orderDTO: OrderDTO) {
         val order = orderService.create(orderDTO.toOrder())
 //        val map = hashMapOf<String, Any>()
